@@ -22,7 +22,7 @@ Inktblauw op crèmekleurig papier, met koraal, zonnegeel en mint. Vormen hebben 
 gekleurd vlak dat net naast de inktlijn valt, zoals bij een stempeldruk. De kleuren
 staan bovenaan `style.css`, de tekeningetjes bovenaan `app.js`.
 
-Versie 1 (de eerste, eenvoudige layout) is bewaard onder de tag `v1`.
+Versie 1 (de eerste, eenvoudige layout) staat nog in de geschiedenis: commit `ac10799`.
 
 ## Op je iPhone zetten
 
