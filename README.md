@@ -1,3 +1,3 @@
-# Mijn project
+# Friendbook
 
 Mijn eerste repository.
