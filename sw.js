@@ -1,7 +1,8 @@
 // Zorgt dat Friendbook ook zonder internet werkt.
-const CACHE = 'friendbook-v1';
+const CACHE = 'friendbook-v2';
 const FILES = ['./', 'index.html', 'style.css', 'app.js', 'manifest.webmanifest',
-  'icons/icon-180.png', 'icons/icon-512.png'];
+  'icons/icon-180.png', 'icons/icon-512.png',
+  'fonts/caveat.woff2', 'fonts/kaushan-script.woff2', 'fonts/patrick-hand.woff2'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
