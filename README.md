@@ -5,16 +5,25 @@ met hun naam, verjaardag, favorieten en een boodschap voor jou.
 
 ## Wat kan het?
 
-- Een kaft met jouw naam, een inhoudsopgave en per vriend drie boekjespagina's:
-  *Dit ben ik*, *Mijn favorieten* en *Voor jou*
-- Invullen gebeurt op de pagina zelf, op schrijflijntjes, in een tekstballon en in wolkjes
-- Foto, lievelingskleur en aankruishartjes per vriend
-- Bladeren door te vegen; op een breed scherm liggen de pagina's naast elkaar
-- Zoeken op naam en zien wie er als eerste jarig is
-- Reservekopie opslaan en terugzetten
-- Werkt zonder internet zodra het op je beginscherm staat
+Friendbook draait om vriendschap en positiviteit: geen video's, geen tellers en
+een tijdlijn die gewoon ophoudt. Vrienden zijn de mensen die jouw boekje hebben ingevuld.
 
-Alles wordt alleen op je eigen toestel bewaard; er is geen account of server.
+- **Home**: wat je vrienden delen (foto's en berichtjes), de antwoorden op jouw vragen,
+  wie er bijna jarig is en elke dag een *compliment van de dag* om naar een vriend te sturen
+- **Delen**: zelf iets delen met je vrienden, of ze allemaal dezelfde vraag stellen;
+  de antwoorden komen op een eigen pagina in je boek
+- **Mijn boek**: je vriendenboek als echt boek waar je doorheen bladert, met kaft,
+  inhoudsopgave met zoekveld, drie pagina's per vriend, je vragen met antwoorden en
+  een pagina *Lieve woorden* met de complimenten die je kreeg
+- Reservekopie opslaan en terugzetten; werkt zonder internet zodra het op je beginscherm staat
+
+### Dit is een proefversie
+
+Er is nog geen server en er zijn nog geen accounts. Alles wordt alleen op je eigen toestel
+bewaard, dus vrienden kunnen nog niet vanaf hun eigen telefoon meedoen en wat jij deelt of
+stuurt komt nog niet bij hen aan. Via *meer* laad je vier verzonnen **voorbeeldvrienden**
+die laten zien hoe het straks werkt; je haalt ze daar ook weer weg. Een echte vriend kan
+op jouw toestel het boekje invullen en een vraag beantwoorden.
 
 ## Huisstijl
 
@@ -22,7 +31,8 @@ Inktblauw op crèmekleurig papier, met koraal, zonnegeel en mint. Vormen hebben 
 gekleurd vlak dat net naast de inktlijn valt, zoals bij een stempeldruk. De kleuren
 staan bovenaan `style.css`, de tekeningetjes bovenaan `app.js`.
 
-Versie 1 (de eerste, eenvoudige layout) staat nog in de geschiedenis: commit `ac10799`.
+Eerdere versies staan in de geschiedenis: versie 1 (eenvoudige lijst) is commit `ac10799`,
+versie 2 (alleen het boekje) is commit `8e13b5e`.
 
 ## Op je iPhone zetten
 
@@ -45,6 +55,7 @@ Open daarna http://localhost:8000 in je browser.
 | `index.html` | De pagina zelf |
 | `style.css` | Het uiterlijk |
 | `app.js` | De werking, de vragen en de tekeningetjes |
+| `demo.js` | De voorbeeldvrienden van de proefversie |
 | `sw.js` | Zorgt dat de app offline werkt |
 | `manifest.webmanifest` | Naam en icoon voor het beginscherm |
 | `fonts/` | De handschrift-lettertypen (vrij te gebruiken, zie `fonts/LICENSE.txt`) |

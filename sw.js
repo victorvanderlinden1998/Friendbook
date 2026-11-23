@@ -1,6 +1,6 @@
 // Zorgt dat Friendbook ook zonder internet werkt.
-const CACHE = 'friendbook-v2';
-const FILES = ['./', 'index.html', 'style.css', 'app.js', 'manifest.webmanifest',
+const CACHE = 'friendbook-v3';
+const FILES = ['./', 'index.html', 'style.css', 'app.js', 'demo.js', 'manifest.webmanifest',
   'icons/icon-180.png', 'icons/icon-512.png',
   'fonts/caveat.woff2', 'fonts/kaushan-script.woff2', 'fonts/patrick-hand.woff2'];
 

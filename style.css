@@ -42,7 +42,7 @@ body {
 
 /* ---------- Balk bovenaan ---------- */
 .topbar {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between; min-height: 44px; box-sizing: content-box;
   max-width: 1320px; margin: 0 auto;
   padding: calc(env(safe-area-inset-top) + 8px) 14px 4px;
 }
@@ -56,8 +56,8 @@ body {
 .nav-btn.ghost { visibility: hidden; min-width: 60px; }
 .topbar-note { font: 22px/1 var(--hand); color: var(--pen); padding-right: 10px; transform: rotate(-3deg); }
 
-main { padding-bottom: calc(env(safe-area-inset-bottom) + 28px); }
-main.single { padding: 6px 14px calc(env(safe-area-inset-bottom) + 28px); }
+main { padding-bottom: calc(env(safe-area-inset-bottom) + 100px); }
+main.single { padding: 6px 14px calc(env(safe-area-inset-bottom) + 100px); }
 main.single .page { margin: 0 auto; }
 
 /* ---------- Een pagina van het boekje ---------- */
@@ -103,7 +103,7 @@ h3.lbl { margin: 18px 0 2px; font-size: 22px; }
   font: 500 25px/var(--rule) var(--hand); color: var(--pen);
   overflow-wrap: anywhere; white-space: pre-wrap;
 }
-input.ink, textarea.ink {
+input.ink, textarea.ink, select.ink {
   display: block; width: 100%; min-width: 0; margin: 0; padding: 0;
   background-color: transparent; border: 0; border-radius: 0; outline: none;
   -webkit-appearance: none; appearance: none; resize: none; overflow: hidden;
@@ -207,7 +207,7 @@ label.check { cursor: pointer; }
 .heart-fill { fill: transparent; }
 .check input:checked + .heart .heart-fill, .check.on .heart-fill { fill: var(--fav); }
 .check input:focus-visible + .heart .heart-line { stroke: var(--pen); stroke-width: 2.6; }
-.spread:not(.editing) .check:not(.on) { color: var(--ink-soft); }
+.checks:not(.editing) .check:not(.on) { color: var(--ink-soft); }
 
 .sign { width: 62%; margin: 18px 0 0 auto; }
 
@@ -251,10 +251,11 @@ label.check { cursor: pointer; }
 
 /* ---------- Inhoudsopgave ---------- */
 .toc-list { margin-top: 12px; }
-.toc { display: flex; align-items: baseline; gap: 8px; min-height: 46px; padding-top: 8px; color: inherit; text-decoration: none; }
+.toc { display: flex; align-items: baseline; gap: 8px; width: 100%; min-height: 46px; padding: 8px 0 0; color: inherit; text-decoration: none; text-align: left; background: none; border: 0; cursor: pointer; font: inherit; }
+.toc-mark { width: 14px; flex: none; align-self: center; text-align: center; font: 19px/1 var(--label); color: var(--coral); }
 .toc-dot { width: 14px; height: 14px; flex: none; align-self: center; border: 1.5px solid var(--ink); border-radius: 58% 42% 55% 45% / 50% 60% 40% 50%; }
-.toc-name { font: 500 27px/1.1 var(--hand); color: var(--pen); overflow-wrap: anywhere; }
-.leader { flex: 1; min-width: 16px; border-bottom: 2.5px dotted var(--ink-soft); transform: translateY(-5px); }
+.toc-name { min-width: 0; font: 500 27px/1.2 var(--hand); color: var(--pen); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.leader { flex: 1 0 18px; border-bottom: 2.5px dotted var(--ink-soft); transform: translateY(-5px); }
 .toc-nr { font: 22px/1 var(--label); }
 .toc:active .toc-name { text-decoration: underline; }
 .search-row { margin-top: 2px; }
@@ -308,3 +309,165 @@ label.check { cursor: pointer; }
 @media (min-width: 900px) {
   .spread { gap: 26px; padding-top: 16px; }
 }
+
+
+/* =====================================================================
+   Versie 3: tabbalk, home, delen en het bladerboek
+   ===================================================================== */
+
+.brand { padding-left: 8px; font: 400 27px/44px var(--title); }
+.nav-btn:disabled { opacity: .25; }
+.book-actions { display: flex; }
+
+/* ---------- Tabbalk onderaan ---------- */
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+  display: flex; justify-content: center; gap: 8px;
+  padding: 7px 12px calc(env(safe-area-inset-bottom) + 7px);
+  background: var(--paper); border-top: 2px solid var(--ink);
+}
+.tab {
+  flex: 1; max-width: 150px; display: flex; flex-direction: column; align-items: center;
+  padding: 4px 0 3px; font: 15px/1.2 var(--label); color: var(--ink); text-decoration: none;
+  border: 1.5px solid transparent; border-radius: 12px; opacity: .62;
+}
+.tab.on { opacity: 1; background: var(--sun); border-color: var(--ink); box-shadow: 2px 2px 0 var(--ink); }
+.tab-icon { width: 26px; height: 26px; }
+
+/* ---------- Berichtje na een actie ---------- */
+.toast {
+  position: fixed; left: 50%; top: calc(env(safe-area-inset-top) + 12px); z-index: 30;
+  width: max-content; max-width: 88vw; padding: 10px 16px; text-align: center;
+  background: var(--ink); color: var(--paper); font: 18px/1.25 var(--label);
+  border-radius: 12px; box-shadow: 4px 4px 0 var(--sun); pointer-events: none;
+  animation: toast 3.8s forwards;
+}
+@keyframes toast {
+  0% { opacity: 0; transform: translate(-50%, -12px); }
+  8%, 85% { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, 0); visibility: hidden; }
+}
+
+/* ---------- Home ---------- */
+.column { max-width: 480px; margin: 0 auto; padding: 0 16px calc(env(safe-area-inset-bottom) + 100px); }
+.greet { margin: 4px 2px 16px; font: 400 42px/1.1 var(--title); transform: rotate(-2deg); transform-origin: left center; }
+.section-title { margin: 30px 2px 14px; font: 400 29px/1.1 var(--title); }
+.ribbon { margin: 0 0 18px; padding: 7px 12px; font: 15px/1.3 var(--label); color: var(--ink); background: rgba(255, 250, 240, .7); border: 1.5px dashed var(--ink-soft); border-radius: 10px; }
+.ribbon a, .empty-note a { color: var(--pen); }
+
+.card {
+  position: relative; display: block; margin: 0 4px 22px 0; padding: 14px 16px 10px;
+  background: var(--paper); color: inherit; text-decoration: none;
+  border: 2px solid var(--ink); border-radius: 16px; box-shadow: 5px 5px 0 var(--c, var(--sun));
+}
+.card-title { margin: 0 0 6px; font: 400 26px/1.15 var(--title); }
+.card .btn { margin-top: 14px; }
+
+.avatar {
+  width: 46px; height: 46px; flex: none; display: grid; place-items: center; overflow: hidden;
+  background: var(--c, var(--ink)); color: #fff; font: 18px/1 var(--label);
+  border: 2px solid var(--ink); border-radius: 58% 42% 55% 45% / 50% 60% 40% 50%;
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.avatar.big { width: 68px; height: 68px; font-size: 26px; }
+
+.sticky.prompt { width: auto; margin: 12px 10px 30px 6px; padding: 24px 16px 12px; transform: rotate(-1.5deg); cursor: default; }
+.kicker { display: block; font: 13px/1.2 var(--label); letter-spacing: .1em; text-transform: uppercase; }
+.prompt-q { margin: 6px 0 10px; font: 500 29px/1.15 var(--hand); color: var(--pen); }
+.btn.small { width: auto; display: inline-block; margin: 6px 0; padding: 9px 16px; font-size: 20px; box-shadow: 3px 3px 0 var(--ink); }
+.sticky .btn.small { display: block; width: 100%; background: var(--coral); }
+.done { display: block; margin-top: 2px; font: 15px/1.3 var(--label); }
+.mini-link {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 0 4px;
+  background: none; border: 0; cursor: pointer; text-decoration: none;
+  font: 500 20px/1 var(--hand); color: var(--pen);
+}
+.mini-link.danger { color: #c92a2a; }
+
+.mail-item { margin: 8px 0 0; padding-top: 8px; border-top: 1.5px dashed var(--line, #e6dac6); }
+.mail-item .ink { display: block; font-size: 23px; line-height: 28px; }
+.mail-item small, .post-head small, .my-question small, .birthday small { display: block; font: 15px/1.3 var(--label); color: var(--ink-soft); }
+.mail { --c: var(--coral); }
+.birthday { display: flex; align-items: center; gap: 12px; padding-bottom: 14px; --c: var(--mint); }
+.cake { font-size: 30px; }
+
+.post-head { display: flex; align-items: center; gap: 10px; }
+.post-head strong { display: block; font: 21px/1.2 var(--label); font-weight: 400; }
+.post-text { margin: 10px 0 4px; font: 20px/1.35 var(--label); overflow-wrap: anywhere; white-space: pre-wrap; }
+.post-photo { width: 80%; margin: 18px auto 16px; padding: 8px; --fav: var(--c); transform: rotate(-2deg); }
+.post-photo img { display: block; width: 100%; max-height: 340px; object-fit: cover; }
+.post-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 6px; min-height: 44px; }
+.heart-btn {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 2px 14px 2px 8px;
+  background: none; border: 1.5px solid var(--ink); border-radius: 999px; cursor: pointer;
+  font: 19px/1 var(--label); color: var(--ink); --fav: var(--coral);
+}
+.heart-btn .heart { width: 26px; height: 26px; }
+.heart-btn.on { background: #ffe9e4; }
+.heart-btn.on .heart-fill { fill: var(--coral); }
+.quote { margin: 10px 0 0; font: 16px/1.3 var(--label); color: var(--ink-soft); }
+.quote::before { content: "Jij vroeg: "; }
+.answer-text { margin: 0 0 2px; font-size: 25px; line-height: 30px; }
+.feed-end { margin: 34px 0 10px; text-align: center; font: 500 24px/1.25 var(--hand); opacity: .85; }
+.feed-end span { display: block; font-size: 38px; line-height: 1; color: var(--sun); }
+
+/* ---------- Delen en lief briefje ---------- */
+.seg { display: flex; margin: 0 0 14px; overflow: hidden; border: 2px solid var(--ink); border-radius: 12px; }
+.seg button { flex: 1; padding: 10px 6px; background: var(--paper); border: 0; cursor: pointer; font: 19px/1.2 var(--label); color: var(--ink); }
+.seg button.on { background: var(--ink); color: var(--paper); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 6px; }
+.chip { padding: 7px 12px; text-align: left; background: #fff; border: 1.5px solid var(--ink); border-radius: 999px; cursor: pointer; font: 17px/1.2 var(--label); color: var(--ink); }
+.chip:active { background: var(--sun); }
+.attach { display: flex; flex-direction: column; align-items: flex-start; margin-top: 8px; }
+.attach .btn { margin: 8px 0 4px; }
+.attach-preview { align-self: center; width: 62%; margin: 16px 0 4px; }
+.attach .link { align-self: center; }
+.my-question { margin-top: 10px; padding-top: 10px; border-top: 1.5px dashed #e6dac6; }
+.my-question .ink { margin: 0; font-size: 24px; line-height: 29px; }
+.answer-form { margin-top: 6px; padding: 4px 12px 10px; border: 1.5px dashed var(--ink-soft); border-radius: 12px; }
+.row select.ink { flex: 1 1 110px; height: var(--rule); border-bottom: 1.5px solid var(--ink-soft); }
+.to { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.fine { font-size: 15px; color: var(--ink-soft); }
+.letter textarea { margin-top: 10px; }
+
+/* ---------- Het bladerboek ---------- */
+.book-view { display: flex; flex-direction: column; align-items: center; padding: 2px 18px 0 14px; }
+.stage {
+  position: relative; width: 100%; max-width: 440px;
+  height: calc(100dvh - 190px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); min-height: 360px;
+  perspective: 1500px; perspective-origin: 15% 50%;
+}
+/* het pak bladzijden dat onder de open pagina ligt */
+.stage::before {
+  content: ""; position: absolute; inset: 3px -7px -7px 5px; border-radius: 4px 16px 16px 4px;
+  background: repeating-linear-gradient(90deg, #f3ead9 0 2px, #e2d6c1 2px 3px);
+  box-shadow: 0 0 0 1.5px rgba(35, 42, 77, .25), 0 14px 26px rgba(60, 40, 10, .22);
+}
+.leaf {
+  position: absolute; inset: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  background: var(--paper); border-radius: 4px 14px 14px 4px;
+  box-shadow: 0 0 0 1.5px rgba(35, 42, 77, .3);
+  transform-origin: left center; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+.leaf::-webkit-scrollbar { display: none; }
+.leaf:empty { visibility: hidden; }
+.leaf .page { max-width: none; min-height: 100%; border-radius: 0; box-shadow: none; }
+.leaf.is-cover { background: none; }
+.leaf .cover { max-width: none; min-height: 100%; border-radius: 4px 14px 14px 4px; box-shadow: none; gap: 20px; padding-top: 30px; padding-bottom: 20px; }
+.book-pager { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 440px; margin-top: 12px; }
+.page-count { font: 500 23px/1 var(--hand); color: var(--ink); }
+
+.asked { min-height: 132px; margin-bottom: 6px; }
+.asked .shape-in { padding-bottom: 44px; }
+.answer { display: flex; align-items: flex-start; gap: 10px; margin-top: 16px; }
+.answer > div { flex: 1; min-width: 0; }
+.answer .lbl { display: block; font-size: 17px; }
+.words { display: flex; flex-direction: column; gap: 26px; margin: 14px 0 6px; }
+.word-note { position: relative; width: 86%; padding: 22px 14px 10px; background: #ffe08a; box-shadow: 3px 4px 0 rgba(35, 42, 77, .16); transform: rotate(-1.5deg); }
+.word-note.n1 { align-self: flex-end; background: #c9eedd; transform: rotate(1.5deg); }
+.word-note.n2 { background: #ffd3cb; transform: rotate(-.5deg); }
+.word-note .ink { display: block; font-size: 24px; line-height: 29px; color: var(--ink); }
+.word-note small { display: block; text-align: right; font: 500 21px/1.3 var(--hand); color: var(--pen); }
+.word-note .tape { background: var(--coral); }
+.word-note.n1 .tape { background: var(--sun); }
